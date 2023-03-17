@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="module" defer>
+    // 이벤트 소스에 이벤트 리스너 등록
+    document.querySelector("#loginButton").addEventListener("click", () => {
+      login();
+
+    });
+
+    function login() {
+      let userId= document.querySelector("#id").value;
+      let userPw= document.querySelector("#pw").value;
+      // console.log(userId, userPw);
+
+      let option = {
+        method : "post", //get방식은 생략 가능.
+        headers : {
+          "Content-Type" : "application/x-www-form-urlencoded" 
+        },
+        body : `id=${userId}&pw=${userPw}`
+      }
+
+      fetch("loginAction.jsp", option)
+        .then(response => response.text())
+        .then(message => showMessage(message)) // 오브젝트 객체로 받는다? 
+        .catch(error => showMessage(error))
+        .finally(() => console.log("이미지 로딩 없애는 코드"))
+    }
+
+    function showMessage(message) {
+      document.querySelector("#message").innerHTML = message;
+    }
+  </script>
+</head>
+
+<body>
+    <div>
+      <input type="text" name="id" id="id"><br>
+      <input type="password" name="pw" id="pw"><br>
+      <input type="submit" value="로그인" id="loginButton">
+    </div>
+
+  <div id="message"></div>
+
+
+</body>
+
+</html>

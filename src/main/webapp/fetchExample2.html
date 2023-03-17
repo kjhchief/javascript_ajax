@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="module" defer>
+    // 이벤트 소스에 이벤트 리스너 등록
+    document.querySelector("#button").addEventListener("click", () => {
+      requestBookList();
+
+    });
+
+    function requestBookList(){
+      // Fetch API를 이용한 비동기 통신
+      fetch("jsonBookList.jsp")
+      .then(response => response.json())
+      .then(books => showMessage2(books)) // 오브젝트 객체로 받는다? 
+      .catch(error => {
+        showMessage2(error)
+      })
+      .finally(() => console.log("이미지 로딩 없애는 코드"))
+    }
+
+    function showMessage(books){
+      console.dir(books);
+      let element2_1 = books.list[0].title
+      let element3_1 = books.list[1].title
+      let element4_1 = books.list[2].title
+      document.querySelector("#td2-1").innerHTML = element2_1;
+      document.querySelector("#td3-1").innerHTML = element3_1;
+      document.querySelector("#td4-1").innerHTML = element4_1;
+
+      let element2_2 = books.list[0].kind
+      let element3_2 = books.list[1].kind
+      let element4_2 = books.list[2].kind
+      document.querySelector("#td2-2").innerHTML = element2_2;
+      document.querySelector("#td3-2").innerHTML = element3_2;
+      document.querySelector("#td4-2").innerHTML = element4_2;
+
+      let element2_3 = books.list[0].author
+      let element3_3 = books.list[1].author
+      let element4_3 = books.list[2].author
+      document.querySelector("#td2-3").innerHTML = element2_3;
+      document.querySelector("#td3-3").innerHTML = element3_3;
+      document.querySelector("#td4-3").innerHTML = element4_3;
+
+      let element2_4 = books.list[0].publisher
+      let element3_4 = books.list[1].publisher
+      let element4_4 = books.list[2].publisher
+      document.querySelector("#td2-4").innerHTML = element2_4;
+      document.querySelector("#td3-4").innerHTML = element3_4;
+      document.querySelector("#td4-4").innerHTML = element4_4;
+
+      document.querySelector("#td2-5").innerHTML = books.list[0].price;
+      document.querySelector("#td3-5").innerHTML = books.list[1].price;
+      document.querySelector("#td4-5").innerHTML = books.list[2].price;
+    }
+
+    function showMessage2(books){
+         //console.dir(books);
+         let table = `<table border='1'>
+                      <tr><th>교재명</th><th>장르</th><th>저자</th><th>출판사</th><th>가격</th></tr>`;
+         for (const book of books.list) {
+            table += `<tr><td>${book.title}</td><td>${book.kind}</td><td>${book.author}</td><td>${book.publisher}</td><td>${book.price}</td></tr>`;
+         }  
+         table += `</table>`;
+         document.querySelector("#book_list").innerHTML = table;
+      }
+
+
+
+
+  </script>
+</head>
+<body>
+  <button id="button">교재 목록 보기</button>
+  <h1>서버로부터 수신한 교재 목록</h1>
+
+  <table border="1">
+    <tr>
+      <td id="td1-1">교재명</td>
+      <td id="td1-2">장르</td>
+      <td id="td1-3">저자</td>
+      <td id="td1-4">출판사</td>
+      <td id="td1-5">가격</td>
+    </tr>
+    <tr>
+      <td id="td2-1"></td>
+      <td id="td2-2"></td>
+      <td id="td2-3"></td>
+      <td id="td2-4"></td>
+      <td id="td2-5"></td>
+    </tr>
+    <tr>
+      <td id="td3-1"></td>
+      <td id="td3-2"></td>
+      <td id="td3-3"></td>
+      <td id="td3-4"></td>
+      <td id="td3-5"></td>
+    </tr>
+    <tr>
+      <td id="td4-1"></td>
+      <td id="td4-2"></td>
+      <td id="td4-3"></td>
+      <td id="td4-4"></td>
+      <td id="td4-5"></td>
+    </tr>
+  </table>
+
+  <div id="book_list"></div>
+  
+
+</body>
+</html>
