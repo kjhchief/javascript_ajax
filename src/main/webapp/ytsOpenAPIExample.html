@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="module" defer>
+    // 이벤트 소스에 이벤트 리스너 등록
+    document.querySelector("#button").addEventListener("click", () => {
+      requestMovieList();
+
+    });
+
+    function requestMovieList() {
+
+      fetch("/ajax/albums")
+        .then(response => response.json()) // json을 알아서 object로 바꾼다. response가.
+        .then(list => showMessage(list)) // 오브젝트 객체로 받는다? 
+        .catch(error => showMessage(error))
+        .finally(() => console.log("이미지 로딩 없애는 코드"))
+    }
+
+    function showMessage(list) {
+      console.dir(list);
+    }
+  </script>
+</head>
+
+<body>
+  <button id="button">영화정보 목록 받기</button>
+
+</body>
+
+</html>
